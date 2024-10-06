@@ -49,7 +49,7 @@ export function HomePage() {
         }}
         className="z-50 flex flex-col justify-center items-center"
       >
-        <motion.h4 className={`${oswald.className} tracking-tight font-bold text-lg md:text-xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 px-4`}>HEY THERE, I&apos;M YEABSIRA</motion.h4>
+        <motion.h4 className={`${oswald.className} tracking-tight font-bold text-lg md:text-xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 px-4 mb-4`}>HEY THERE, I&apos;M YEABSIRA</motion.h4>
         <AnimatePresence mode="wait">
           <motion.p
             key={currentTitleIndex}

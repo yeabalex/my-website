@@ -6,9 +6,10 @@ import { ImagesSlider } from "../ui/image-slider";
 import { images } from "./HomePage"; // Importing images from HomePage
 import Nav from "@/components/ui/nav";
 
+
 export default function AboutPage() {
   return (
-    <ImagesSlider className="h-screen" images={images}>
+    <ImagesSlider className="h-full" images={images}>
       <div className="min-h-screen  p-4 md:p-6 flex flex-col justify-center items-start z-50">
         <div className="max-w-2xl">
           <h1 className={`${oswald.className} text-4xl md:text-5xl font-bold mb-4 text-left`}>

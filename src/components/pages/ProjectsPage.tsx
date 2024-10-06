@@ -7,6 +7,8 @@ import { ImagesSlider } from '../ui/image-slider';
 import { images } from './HomePage';
 import Nav from '@/components/ui/nav';
 import Image from 'next/image';
+import { useSwipeable } from 'react-swipeable';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 interface Project {
   name: string;
@@ -21,9 +23,9 @@ interface Project {
 
 const projects: Project[] = [
   {
-    name: "E-commerce Platform",
-    techStack: ["React", "Node.js", "Express", "MongoDB", "Redux"],
-    description: "A full-stack e-commerce application with user authentication, product catalog, shopping cart, and payment integration.",
+    name: "Resume Builder",
+    techStack: ["Next.js", "Node.js", "PostgreSQL", "Express", "Tailwind CSS", "Amazon RDS", "Amazon S3", "Jest", "Prisma"],
+    description: "A full-stack Resume Builder application with user authentication, including OAuth with Google. Users fill out a form about their experience, skills, info, etc. on their dashboard, and it generates a professional resume based on the information provided. Users can download the resume in PDF format and also share it using a custom link provided. Users can log in to their account at any time to edit their information, and it will generate a new resume with the updated information. All the servers, databases, and other cloud services are fully managed by me",
     thumbnailImage: "/images/ecommerce-thumbnail.jpg",
     screenshots: [
       "/images/ecommerce-screenshot1.jpg",
@@ -35,9 +37,9 @@ const projects: Project[] = [
     category: "Web Development",
   },
   {
-    name: "Task Management App",
-    techStack: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS"],
-    description: "A real-time task management application with collaborative features and deadline tracking.",
+    name: "My Speciality Dental Clinic",
+    techStack: ["React.js", "Next.js", "", "Tailwind CSS"],
+    description: "A fully responsive website for a dental clinic. It includes features such as contact form, and appointment booking. It is a fully responsive website that is also hosted on Vercel.",
     thumbnailImage: "/images/taskapp-thumbnail.jpg",
     screenshots: [
       "/images/taskapp-screenshot1.jpg",
@@ -49,9 +51,9 @@ const projects: Project[] = [
     category: "Web Development",
   },
   {
-    name: "Weather Forecast API",
-    techStack: ["Python", "Flask", "PostgreSQL", "Docker", "AWS"],
-    description: "A RESTful API that provides accurate weather forecasts based on location data and historical weather patterns.",
+    name: "Spotify Playlist Generator",
+    techStack: ["Next.js", "Node.js", "Spotify API", "Tailwind CSS"],
+    description: "A web app that allows users to generate a Spotify playlist based on a genre, artist, or simmilar artists. It uses Spotify's API to fetch songs and create a personalized playlist. Users can select a mood and generate a playlist based on that mood.",
     thumbnailImage: "/images/weather-api-thumbnail.jpg",
     screenshots: [
       "/images/weather-api-screenshot1.jpg",
@@ -81,9 +83,11 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
+    setCurrentScreenshotIndex(0);
   };
 
   const closeModal = () => {
@@ -98,6 +102,31 @@ export default function ProjectsPage() {
       : projects;
     setFilteredProjects(filtered);
   }, [selectedCategory]);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (selectedProject && currentScreenshotIndex < selectedProject.screenshots.length - 1) {
+        setCurrentScreenshotIndex(currentScreenshotIndex + 1);
+      }
+    },
+    onSwipedRight: () => {
+      if (currentScreenshotIndex > 0) {
+        setCurrentScreenshotIndex(currentScreenshotIndex - 1);
+      }
+    },
+  });
+
+  const handlePrevious = () => {
+    if (currentScreenshotIndex > 0) {
+      setCurrentScreenshotIndex(currentScreenshotIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (selectedProject && currentScreenshotIndex < selectedProject.screenshots.length - 1) {
+      setCurrentScreenshotIndex(currentScreenshotIndex + 1);
+    }
+  };
 
   return (
     <ImagesSlider className="h-full" images={images}>
@@ -182,7 +211,7 @@ export default function ProjectsPage() {
             ))}
           </AnimatePresence>
         </motion.div>
-        <div className="mt-6 sm:mt-8">
+        <div className="mt-6 mb-6">
           <Nav />
         </div>
       </div>
@@ -212,18 +241,44 @@ export default function ProjectsPage() {
                   </span>
                 ))}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                {selectedProject.screenshots.map((screenshot, index) => (
-                  <div key={index} className="relative aspect-video">
-                    <Image
-                      src={screenshot}
-                      alt={`${selectedProject.name} screenshot ${index + 1}`}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-lg"
+              <div {...handlers} className="relative aspect-video mb-4">
+                <Image
+                  src={selectedProject.screenshots[currentScreenshotIndex]}
+                  alt={`${selectedProject.name} screenshot ${currentScreenshotIndex + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
+                />
+                <button
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevious();
+                  }}
+                  disabled={currentScreenshotIndex === 0}
+                >
+                  <FaChevronLeft />
+                </button>
+                <button
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNext();
+                  }}
+                  disabled={currentScreenshotIndex === selectedProject.screenshots.length - 1}
+                >
+                  <FaChevronRight />
+                </button>
+                <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+                  {selectedProject.screenshots.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-2 w-2 rounded-full mx-1 ${
+                        index === currentScreenshotIndex ? 'bg-emerald-500' : 'bg-gray-400'
+                      }`}
                     />
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
               <div className="flex justify-between">
                 <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors">

@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Yeabsira",
+  title: {
+    template: "%s | Yeabsira",
+    default: "Yeabsira",
+  },
   description: "Showcase of my work",
   icons: {
     icon: "/my-pic.png",

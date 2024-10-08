@@ -10,23 +10,19 @@ import Nav from "@/components/ui/nav";
 export default function AboutPage() {
   return (
     <ImagesSlider className="h-full" images={images}>
-      <div className="min-h-screen  p-4 md:p-6 flex flex-col justify-center items-start z-50">
+      <div className="min-h-screen  p-4 md:p-6 flex flex-col justify-center items-start z-50 backdrop-blur-sm">
         <div className="max-w-2xl">
           <h1 className={`${oswald.className} text-4xl md:text-5xl font-bold mb-4 text-left`}>
             ABOUT ME
           </h1>
           <p className={`${openSans.className} text-sm md:text-base text-gray-300 text-left mb-4`}>
-            I&apos;m a passionate software engineer with a love for crafting elegant solutions to complex problems. 
-            My journey in the digital realm spans from robust backend systems to intuitive user interfaces. 
-            Always eager to learn and grow, I&apos;m constantly exploring new technologies and pushing the boundaries of what&apos;s possible in code.
+            Hello there! My name is Yeabsira. I am an aspiring software engineer based in Addis Ababa, Ethiopia with an interest in backend systems and cloud computing. My coding journey began when I joined Addis Ababa Science and Technology University, where I discovered my love for programming. Currently, I am a second-year Software Engineering student at HiLCoE School of Computer Science and Technology. My favorite programming language is Java.
           </p>
-          <p className={`${openSans.className} text-sm md:text-base text-gray-300 text-left mb-4`}>
-            I&apos;m a passionate software engineer with a love for crafting elegant solutions to complex problems. 
-            My journey in the digital realm spans from robust backend systems to intuitive user interfaces. 
-            Always eager to learn and grow, I&apos;m constantly exploring new technologies and pushing the boundaries of what&apos;s possible in code.
+          <p className={`${openSans.className} text-sm md:text-base text-gray-300 text-left mb-6`}>
+          Outside of programming, I am passionate about music, particularly house music and jazz. I enjoy playing drum machines and experimenting with different sounds. In my free time, I also love cycling and playing football.
           </p>
         </div>
-        <iframe style={{borderRadius:"12px",}} src="https://open.spotify.com/embed/track/1YtLTcpQotwJj11ZFgdPYf?utm_source=generator&theme=0" width="100%" height="220" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        
         <Nav />
       </div>
       

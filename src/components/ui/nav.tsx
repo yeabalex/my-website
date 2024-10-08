@@ -20,7 +20,7 @@ const Nav: React.FC = () => {
       <ul className="flex justify-center space-x-6 text-sm md:text-base">
         <li><Link href="/" className={getLinkClassName('/')}>Home</Link></li>
         <li><Link href="/about" className={getLinkClassName('/about')}>About</Link></li>
-        <li><Link href="/projects" className={getLinkClassName('/projects')}>Projects</Link></li>
+        <li><Link href="/portfolio" className={getLinkClassName('/portfolio')}>Portfolio</Link></li>
         <li><Link href="/contact" className={getLinkClassName('/contact')}>Contact</Link></li>
       </ul>
     </div>

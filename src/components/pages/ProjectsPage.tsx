@@ -17,8 +17,10 @@ interface Project {
   thumbnailImage: string;
   screenshots: string[];
   link: string;
-  deployedUrl: string;
+  deployedUrl?: string;
   category: string;
+  cover?: boolean;
+  video?: string
 }
 
 const projects: Project[] = [
@@ -26,57 +28,72 @@ const projects: Project[] = [
     name: "Resume Builder",
     techStack: ["Next.js", "Node.js", "PostgreSQL", "Express", "Tailwind CSS", "Amazon RDS", "Amazon S3", "Jest", "Prisma"],
     description: "A full-stack Resume Builder application with user authentication, including OAuth with Google. Users fill out a form about their experience, skills, info, etc. on their dashboard, and it generates a professional resume based on the information provided. Users can download the resume in PDF format and also share it using a custom link provided. Users can log in to their account at any time to edit their information, and it will generate a new resume with the updated information. All the servers, databases, and other cloud services are fully managed by me",
-    thumbnailImage: "/images/ecommerce-thumbnail.jpg",
+    thumbnailImage: "/resume.png",
     screenshots: [
-      "/images/ecommerce-screenshot1.jpg",
-      "/images/ecommerce-screenshot2.jpg",
-      "/images/ecommerce-screenshot3.jpg",
+      "/screenshots/resume1.png",
+      "/screenshots/kraft.png",
     ],
-    link: "https://github.com/yourusername/ecommerce-platform",
-    deployedUrl: "https://your-ecommerce-app.com",
-    category: "Web Development",
+    link: "https://github.com/yeabalex/resume-builder-client-side",
+    deployedUrl: "https://kraftwerk.vercel.app/",
+    category: "Backend + Cloud",
+    cover: true,
+    video: "https://www.youtube.com/embed/4oTcFhvMuSI?si=KbPTtYSN2w_K6t-w"
   },
   {
-    name: "My Speciality Dental Clinic",
-    techStack: ["React.js", "Next.js", "", "Tailwind CSS"],
-    description: "A fully responsive website for a dental clinic. It includes features such as contact form, and appointment booking. It is a fully responsive website that is also hosted on Vercel.",
-    thumbnailImage: "/images/taskapp-thumbnail.jpg",
-    screenshots: [
-      "/images/taskapp-screenshot1.jpg",
-      "/images/taskapp-screenshot2.jpg",
-      "/images/taskapp-screenshot3.jpg",
-    ],
-    link: "https://github.com/yourusername/task-management-app",
-    deployedUrl: "https://your-task-app.com",
-    category: "Web Development",
-  },
-  {
-    name: "Spotify Playlist Generator",
+    name: "Spotify Playlist Curator",
     techStack: ["Next.js", "Node.js", "Spotify API", "Tailwind CSS"],
     description: "A web app that allows users to generate a Spotify playlist based on a genre, artist, or simmilar artists. It uses Spotify's API to fetch songs and create a personalized playlist. Users can select a mood and generate a playlist based on that mood.",
-    thumbnailImage: "/images/weather-api-thumbnail.jpg",
+    thumbnailImage: "/Curatefy.png",
     screenshots: [
-      "/images/weather-api-screenshot1.jpg",
-      "/images/weather-api-screenshot2.jpg",
+      ""
     ],
-    link: "https://github.com/yourusername/weather-forecast-api",
-    deployedUrl: "https://api.your-weather-service.com",
+    link: "https://github.com/yeabalex/spotify-playlist-curator",
+    deployedUrl: "https://curatefy.vercel.app/",
     category: "Backend Development",
+    cover: true,
+    video: "https://www.youtube.com/embed/YSC6w1LhDDI?si=KCJk2qKqqgHbdMpM"
   },
   {
     name: "Portfolio Website",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     description: "A personal portfolio website showcasing projects, skills, and professional experience with smooth animations and responsive design.",
-    thumbnailImage: "/images/portfolio-thumbnail.jpg",
+    thumbnailImage: "/yab.png",
     screenshots: [
-      "/images/portfolio-screenshot1.jpg",
-      "/images/portfolio-screenshot2.jpg",
-      "/images/portfolio-screenshot3.jpg",
     ],
-    link: "https://github.com/yourusername/portfolio-website",
-    deployedUrl: "https://your-portfolio.com",
+    link: "https://github.com/yeabalex/my-website",
     category: "Web Development",
+    cover: true,
   },
+  {
+    name: "CLI Data Analysis Tool",
+    techStack: ["Shell", "JavaScript"],
+    description: "A CLI data analysis tool with user interface that allows users to do a simple data analysis from a CSV file. It includes features such as filtering, sorting, and calculating statistics.",
+    thumbnailImage: "/bash.png",
+    screenshots: [
+      "/screenshots/bash/bash1.png",
+      "/screenshots/bash/bash2.png",
+      "/screenshots/bash/bash3.png",
+      "/screenshots/bash/bash4.png",
+      "/screenshots/bash/bash5.png",
+      "/screenshots/bash/bash6.png",
+    ],
+    link: "https://github.com/yeabalex/bash-data-analysis-tool",
+    category: "Tools",
+    cover: true,
+  },
+  /*{
+    name: "My Speciality Dental Clinic",
+    techStack: ["React.js", "Next.js", "", "Tailwind CSS"],
+    description: "A fully responsive website for a dental clinic. It includes features such as contact form, and appointment booking. It is a fully responsive website that is also hosted on Vercel.",
+    thumbnailImage: "/my-spec.png",
+    screenshots: [
+      "/screenshots/sp/sp1.png",
+      "/screenshots/sp/sp2.png",
+    ],
+    link: "https://github.com/yourusername/task-management-app",
+    deployedUrl: "https://your-task-app.com",
+    category: "Web Development",
+  },*/
 ];
 
 export default function ProjectsPage() {
@@ -130,9 +147,9 @@ export default function ProjectsPage() {
 
   return (
     <ImagesSlider className="h-full" images={images}>
-      <div className="min-h-screen p-4 md:p-6 flex flex-col justify-center items-start z-50">
+      <div className="min-h-screen p-4 md:p-6 flex flex-col justify-center items-start z-50 backdrop-blur-sm">
         <h1 className={`${oswald.className} text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-center text-white`}>
-          MY PROJECTS
+          PORTFOLIO
         </h1>
         <div className="flex flex-wrap gap-2 mb-4">
           <motion.button
@@ -167,7 +184,7 @@ export default function ProjectsPage() {
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.name}
-                className="bg-black bg-opacity-50 p-3 sm:p-4 rounded-lg aspect-square flex flex-col justify-between cursor-pointer w-full"
+                className="bg-black bg-opacity-50 p-3 sm:p-4 rounded-lg flex flex-col justify-between cursor-pointer w-full h-[330px]"
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -176,15 +193,15 @@ export default function ProjectsPage() {
                 onClick={() => openModal(project)}
               >
                 <div>
-                  <div className="relative w-full h-24 sm:h-32 mb-2 rounded-lg overflow-hidden">
+                  <div className="relative w-full h-36 mb-2 rounded-lg overflow-hidden">
                     <Image
                       src={project.thumbnailImage}
                       alt={project.name}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit={project.cover ? "cover" : "contain"}
                     />
                   </div>
-                  <h2 className={`${oswald.className} text-base sm:text-lg font-bold mb-1 sm:mb-2 text-emerald-300`}>{project.name}</h2>
+                  <h2 className={`${oswald.className} text-base sm:text-lg font-bold mb-1 sm:mb-2 text-emerald-300`}>{project.name} <span className="text-gray-300 text-xs">(Click to view)</span></h2>
                   <p className={`${openSans.className} text-xs text-gray-300 mb-1 sm:mb-2 line-clamp-2 sm:line-clamp-3`}>{project.description}</p>
                   <div className="flex flex-wrap gap-1 mb-1 sm:mb-2">
                     {project.techStack.slice(0, 2).map((tech, techIndex) => (
@@ -203,9 +220,9 @@ export default function ProjectsPage() {
                   <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors text-xs" onClick={(e) => e.stopPropagation()}>
                     GitHub
                   </a>
-                  <a href={project.deployedUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors text-xs" onClick={(e) => e.stopPropagation()}>
-                    Live Demo
-                  </a>
+                  {project.deployedUrl && <a href={project.deployedUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors text-xs" onClick={(e) => e.stopPropagation()}>
+                  View Project
+                  </a>}
                 </div>
               </motion.div>
             ))}
@@ -241,14 +258,16 @@ export default function ProjectsPage() {
                   </span>
                 ))}
               </div>
-              <div {...handlers} className="relative aspect-video mb-4">
-                <Image
+              {((selectedProject.video && selectedProject.screenshots.length > 0) || (selectedProject.screenshots.length > 0)) && <div {...handlers} className="relative aspect-video mb-4">
+                {selectedProject.video && currentScreenshotIndex === 0 &&<iframe className="rounded-lg w-full h-[85%]" src={selectedProject.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>}
+                {((selectedProject.video && currentScreenshotIndex > 0) || (selectedProject.screenshots.length > 0 && !selectedProject.video)) && <Image
                   src={selectedProject.screenshots[currentScreenshotIndex]}
                   alt={`${selectedProject.name} screenshot ${currentScreenshotIndex + 1}`}
-                  layout="fill"
+                  width={1000}
+                  height={850}
                   objectFit="cover"
-                  className="rounded-lg"
-                />
+                  className="rounded-lg h-[100%] w-full"
+                />}
                 <button
                   className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
                   onClick={(e) => {
@@ -279,14 +298,14 @@ export default function ProjectsPage() {
                     />
                   ))}
                 </div>
-              </div>
+              </div>}
               <div className="flex justify-between">
                 <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors">
                   GitHub Repository
                 </a>
-                <a href={selectedProject.deployedUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors">
-                  Live Demo
-                </a>
+                {selectedProject.deployedUrl && <a href={selectedProject.deployedUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:text-emerald-400 transition-colors">
+                  View Project
+                </a>}
               </div>
               <button
                 className="mt-6 bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600 transition-colors"

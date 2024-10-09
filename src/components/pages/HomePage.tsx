@@ -101,10 +101,10 @@ export function HomePage() {
             </svg>
           </a>
         </div>
-        <button className={`${openSans.className} px-4 py-2 mb-6 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative`}>
+        <a href="https://drive.google.com/file/d/1h0GSoE9Nk69iYqaqV3MFcmsacI738ywO/view?usp=sharing" target="_blank" rel="noopener noreferrer" className={`${openSans.className} px-4 py-2 mb-6 backdrop-blur-sm border bg-emerald-300/10 border-emerald-500/20 text-white mx-auto text-center rounded-full relative`}>
           <span>Download Resume</span>
           <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
-        </button>
+        </a>
         <Nav />
       </motion.div>
     </ImagesSlider>

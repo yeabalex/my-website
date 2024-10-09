@@ -16,26 +16,42 @@ export const openSans = DM_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 export const images = [
-    //"https://images.unsplash.com/photo-1661163090483-8d6ceb77de18?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://images.unsplash.com/photo-1597660641167-56545225e42d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   ];
 export function HomePage() {
-
-
+  const [loading, setLoading] = useState(true);
   const titles = ["SOFTWARE ENGINEER", "BACKEND DEVELOPER", "CLOUD PRACTITIONER"];
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (sessionStorage.getItem('hasLoaded')) {
+      setLoading(false);
+    } else {
+      const loadingTimer = setTimeout(() => {
+        setLoading(false);
+        sessionStorage.setItem('hasLoaded', 'true');
+      }, 2000);
+
+      return () => clearTimeout(loadingTimer);
+    }
+
+    const titleInterval = setInterval(() => {
       setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % titles.length);
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(titleInterval);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-900">
+        <iframe src="https://lottie.host/embed/1fc7b151-f063-42cc-aa86-4fd46150b79d/mbIm2ql2iE.json" className="w-1/4 h-1/4"></iframe>
+      </div>
+    );
+  }
 
   return (
     <ImagesSlider className="h-screen" images={images}>
-      
       <motion.div
         initial={{
           opacity: 0,
@@ -50,7 +66,7 @@ export function HomePage() {
         }}
         className="z-50 flex flex-col justify-center items-center"
       >
-        <motion.h4 className={`${oswald.className} tracking-tight font-bold text-lg md:text-xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 px-4 mb-2`}>HEY THERE, I&apos;M YEABSIRA</motion.h4>
+        <motion.h4 className={`${oswald.className} tracking-tight font-bold text-lg md:text-xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 px-4 mb-1`}>HEY THERE, I&apos;M YEABSIRA</motion.h4>
         <AnimatePresence mode="wait">
           <motion.p
             key={currentTitleIndex}

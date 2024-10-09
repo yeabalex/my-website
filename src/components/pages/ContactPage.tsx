@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { oswald, openSans } from './HomePage';
 import { ImagesSlider } from '../ui/image-slider';
 import { images } from './HomePage';
 import Nav from '@/components/ui/nav';
 import emailjs from '@emailjs/browser';
+import ReCAPTCHA from "react-google-recaptcha"
 
 interface TemplateParams {
   to_name: string;
@@ -22,6 +23,8 @@ export default function ContactPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   useEffect(() => {
     emailjs.init({
@@ -38,8 +41,16 @@ export default function ContactPage() {
     });
   }, [isInitialized]);
 
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) {
+      setError("Please complete the reCAPTCHA");
+      return;
+    }
     setIsLoading(true);
     setError("");
     setSuccess("");
@@ -50,11 +61,18 @@ export default function ContactPage() {
       message: message,
     };
     try {
-      await emailjs.send('service_fi65v96', 'template_cfz7iio', {to_name: templateParams.to_name, from_name: templateParams.from_name, message: templateParams.message});
+      await emailjs.send('service_fi65v96', 'template_cfz7iio', {
+        to_name: templateParams.to_name,
+        from_name: templateParams.from_name,
+        message: templateParams.message,
+        'g-recaptcha-response': captchaToken
+      });
       setSuccess("Email sent successfully!");
       setName('');
       setEmail('');
       setMessage('');
+      recaptchaRef.current?.reset();
+      setCaptchaToken(null);
     } catch (error) {
       setError("Error sending email: " + error);
     } finally {
@@ -101,8 +119,6 @@ export default function ContactPage() {
               </div>
             </div>
             <div>
-            </div>
-            <div>
               <label htmlFor="message" className={`${openSans.className} block text-sm font-medium text-gray-300 mb-2`}>Message</label>
               <textarea
                 id="message"
@@ -114,10 +130,15 @@ export default function ContactPage() {
               ></textarea>
             </div>
             <div>
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey="6LelgVwqAAAAAPC18TChwuxRVZEZ2y3QIqxeha20"
+                onChange={handleCaptchaChange}
+              />
               <button
                 type="submit"
-                disabled={isLoading}
-                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isLoading ? 'bg-emerald-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-300 transform hover:scale-105`}
+                disabled={isLoading || !captchaToken}
+                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isLoading || !captchaToken ? 'bg-emerald-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-300 transform hover:scale-105`}
               >
                 {isLoading ? 'Sending...' : 'Send Message'}
               </button>
@@ -140,22 +161,7 @@ export default function ContactPage() {
               <div className="flex items-center space-x-4">
                 <svg className="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                 <div className="flex flex-col">
-                  <a href="mailto:general@example.com" className={`${openSans.className} text-gray-300 hover:text-emerald-500 transition duration-300`}>general@yeabsira.com</a>
-                  <span className={`${openSans.className} text-xs text-gray-400`}>(General Inquiries)</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <svg className="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                <div className="flex flex-col">
-                  <a href="mailto:business@example.com" className={`${openSans.className} text-gray-300 hover:text-emerald-500 transition duration-300`}>business@yeabsira.com</a>
-                  <span className={`${openSans.className} text-xs text-gray-400`}>(Business Contact)</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <svg className="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                <div className="flex flex-col">
-                  <a href="mailto:edu@example.com" className={`${openSans.className} text-gray-300 hover:text-emerald-500 transition duration-300`}>edu@yeabsira.com</a>
-                  <span className={`${openSans.className} text-xs text-gray-400`}>(Educational Purposes)</span>
+                  <a href="mailto:contact@yeabsiraa.com" className={`${openSans.className} text-gray-300 hover:text-emerald-500 transition duration-300`}>contact@yeabsiraa.com</a>
                 </div>
               </div>
             </div>

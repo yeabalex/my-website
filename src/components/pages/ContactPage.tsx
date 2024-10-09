@@ -132,13 +132,13 @@ export default function ContactPage() {
             <div>
               <ReCAPTCHA
                 ref={recaptchaRef}
-                sitekey="6LelgVwqAAAAAPC18TChwuxRVZEZ2y3QIqxeha20"
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
                 onChange={handleCaptchaChange}
               />
               <button
                 type="submit"
                 disabled={isLoading || !captchaToken}
-                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isLoading || !captchaToken ? 'bg-emerald-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-300 transform hover:scale-105`}
+                className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isLoading || !captchaToken ? 'bg-emerald-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-300 transform hover:scale-105 mt-4`}
               >
                 {isLoading ? 'Sending...' : 'Send Message'}
               </button>

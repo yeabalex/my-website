@@ -16,7 +16,7 @@ export default function AboutPage() {
             ABOUT ME
           </h1>
           <p className={`${openSans.className} text-sm md:text-base text-gray-300 text-left mb-4`}>
-            Hello there! My name is Yeabsira. I am an aspiring software engineer based in Addis Ababa, Ethiopia with an interest in backend systems and cloud computing. My coding journey began when I joined Addis Ababa Science and Technology University, where I discovered my love for programming. Currently, I am a second-year Software Engineering student at HiLCoE School of Computer Science and Technology. My favorite programming language is Java.
+            Hello there! My name is Yeabsira.I have a strong passion for mathematics and computing, which has driven me to explore the tech world. My focus is on server-side development and cloud computing, leveraging cloud infrastructure to build scalable, high-performance, and fault-tolerant applications. I'm also deeply interested in artificial intelligence and its potential to transform industries by creating intelligent, data-driven systems that enhance efficiency and decision-making. My favorite programming language is Java.
           </p>
           <p className={`${openSans.className} text-sm md:text-base text-gray-300 text-left mb-6`}>
           Outside of programming, I am passionate about music, particularly house music and jazz. I enjoy playing drum machines and experimenting with different sounds. In my free time, I also love cycling and playing football.

@@ -81,7 +81,7 @@ const projects: Project[] = [
     category: "Tools",
     cover: true,
   },
-  /*{
+  {
     name: "My Speciality Dental Clinic",
     techStack: ["React.js", "Next.js", "", "Tailwind CSS"],
     description: "A fully responsive website for a dental clinic. It includes features such as contact form, and appointment booking. It is a fully responsive website that is also hosted on Vercel.",
@@ -93,7 +93,7 @@ const projects: Project[] = [
     link: "https://github.com/yourusername/task-management-app",
     deployedUrl: "https://your-task-app.com",
     category: "Web Development",
-  },*/
+  },
 ];
 
 export default function ProjectsPage() {
